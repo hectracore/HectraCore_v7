@@ -1,6 +1,6 @@
-![Hectacore](https://files.catbox.moe/49w2wm.png)
+![HectraCore]([https://files.catbox.moe/49w2wm.png](https://files.catbox.moe/1pxdxk.png))
 
-# 🚀🤖 𝗔𝘂𝘁𝗼-𝗙𝗶𝗹𝘁𝗲𝗿-𝘃𝟳
+# 🚀🤖 𝗛𝗲𝗰𝘁𝗿𝗮𝗖𝗼𝗿𝗲
 
 ![Python](https://img.shields.io/badge/python-3.12-blue) 
 ![GitHub Workflow](https://img.shields.io/github/actions/workflow/status/muzxfir/Auto-Filter-v7/run-bot.yml) 
