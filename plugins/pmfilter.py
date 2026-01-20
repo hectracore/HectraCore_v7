@@ -1441,7 +1441,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data == "donation":
         buttons = [[
-                InlineKeyboardButton('🌲 Sᴇɴᴅ Dᴏɴᴀᴛᴇ Sᴄʀᴇᴇɴsʜᴏᴛ Hᴇʀᴇ', url=OWNER_LNK)
+                InlineKeyboardButton('🌲 Hᴇʀᴇ', url=OWNER_LNK)
             ],[
                 InlineKeyboardButton('⇍ BACK ⇏', callback_data='about')
             ]]
@@ -1453,7 +1453,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await client.edit_message_media(
             query.message.chat.id, 
             query.message.id, 
-            InputMediaPhoto('https://graph.org/file/99eebf5dbe8a134f548e0.jpg')
+            InputMediaPhoto('https://files.catbox.moe/xfzyax.png')
         )
         await query.message.edit_text(
             text=script.TGEBOTZ_DONATION.format(query.from_user.mention, QR_CODE, OWNER_UPI_ID),
@@ -1474,10 +1474,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data == "about":
         buttons = [[
-            InlineKeyboardButton('‼️ DISCLAIMER ‼️', callback_data='disclaimer'),
-            InlineKeyboardButton ('🪔SOURCE ', callback_data='source'),
+            InlineKeyboardButton('× TERMS ×', callback_data='disclaimer'),
+            InlineKeyboardButton ('SOURCE | SUPPORT ', callback_data='source'),
         ],[
-            InlineKeyboardButton('DONATION 💰', callback_data='donation'), 
+            InlineKeyboardButton('🚀 Back Us', callback_data='donation'), 
         ],[
             InlineKeyboardButton('⇋ BACK TO HOME⇋', callback_data='start')
         ]]
