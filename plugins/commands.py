@@ -21,7 +21,23 @@ from info import *
 from utils import get_settings, save_group_settings, is_subscribed, is_req_subscribed, get_size, get_shortlink, is_check_admin, temp, get_readable_time, get_time, generate_settings_text, log_error, clean_filename
 
 
-
+def format_caption(
+    title='', resolution='', codec='', duration='',
+    language='', audio_format='', size=''
+):
+    lines = [f"📂 {title}"]
+    details = "🎬"
+    if resolution: details += f" {resolution}"
+    if codec: details += f" {codec}"
+    if duration: details += f" ⏳ {duration}"
+    if language: details += f" 🔊 {language}"
+    if audio_format: details += f" {audio_format}"
+    if details != "🎬":
+        lines.append(f"<b>{details}</b>")
+    if size:
+        lines.append(f"💾 Size: {size}")
+    lines.append("➠Latest Uploads: @srsuggestionsmc\n➠Group Updates: @srsuggestionsofficial")
+    return "\n".join(lines)
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
@@ -471,9 +487,8 @@ async def start(client, message):
     )
 except Exception as e:
     logger.exception(e)
-    f_caption = f_caption  # fallback if formatting fails
+    f_caption = f_caption  # fallback
 
-# Final fallback if still None
 if f_caption is None:
     f_caption = clean_filename(files.file_name)
     
