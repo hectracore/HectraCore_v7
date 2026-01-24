@@ -460,7 +460,6 @@ async def start(client, message):
     TGE_CAPTION = settings.get('caption', CUSTOM_FILE_CAPTION)
     if TGE_CAPTION:
         try:
-            try:
     f_caption = format_caption(
         title=title or '',
         resolution=resolution or '',
@@ -472,9 +471,9 @@ async def start(client, message):
     )
 except Exception as e:
     logger.exception(e)
-    f_caption = f_caption  # Keep old value if formatting fails
+    f_caption = f_caption  # fallback if formatting fails
 
-# Final fallback
+# Final fallback if still None
 if f_caption is None:
     f_caption = clean_filename(files.file_name)
     
