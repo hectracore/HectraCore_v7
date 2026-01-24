@@ -474,24 +474,23 @@ async def start(client, message):
     f_caption = files.caption
     settings = await get_settings(int(grp_id))            
     TGE_CAPTION = settings.get('caption', CUSTOM_FILE_CAPTION)
-    if TGE_CAPTION:
-        try:
+  if TGE_CAPTION:
+      try:
         f_caption = format_caption(
-            title=title or '',
-            resolution=resolution or '',
-            codec=codec or '',
-            duration=duration or '',
-            language=language or '',
-            audio_format=audio_format or '',
-            size=size or ''
+            title=title or "",
+            resolution=resolution or "",
+            codec=codec or "",
+            duration=duration or "",
+            language=language or "",
+            audio_format=audio_format or "",
+            size=size or ""
         )
     except Exception as e:
         logger.exception(e)
-        f_caption = f_caption  # fallback
+        pass
 
-if f_caption is None:
+if not f_caption:
     f_caption = clean_filename(files.file_name)
-    
     if STREAM_MODE and not PREMIUM_STREAM_MODE:
         btn = [
             [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
