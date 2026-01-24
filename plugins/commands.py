@@ -476,18 +476,18 @@ async def start(client, message):
     TGE_CAPTION = settings.get('caption', CUSTOM_FILE_CAPTION)
     if TGE_CAPTION:
         try:
-    f_caption = format_caption(
-        title=title or '',
-        resolution=resolution or '',
-        codec=codec or '',
-        duration=duration or '',
-        language=language or '',
-        audio_format=audio_format or '',
-        size=size or ''
-    )
-except Exception as e:
-    logger.exception(e)
-    f_caption = f_caption  # fallback
+        f_caption = format_caption(
+            title=title or '',
+            resolution=resolution or '',
+            codec=codec or '',
+            duration=duration or '',
+            language=language or '',
+            audio_format=audio_format or '',
+            size=size or ''
+        )
+    except Exception as e:
+        logger.exception(e)
+        f_caption = f_caption  # fallback
 
 if f_caption is None:
     f_caption = clean_filename(files.file_name)
