@@ -441,15 +441,17 @@ async def start(client, message):
     files = files_[0]
     title = clean_filename(files.file_name)
     size = get_size(files.file_size)
-    f_caption = files.caption
+    original_caption = files.caption
     settings = await get_settings(int(grp_id))            
     TGE_CAPTION = settings.get('caption', CUSTOM_FILE_CAPTION)
     if TGE_CAPTION:
         try:
             f_caption = TGE_CAPTION.format(
-    file_name='' if title is None else title,
-    file_size='' if size is None else size,
-    file_caption='' if f_caption is None else f_caption,
+    file_name=title or '',
+    resolution=resolution or '',
+    codec=codec or '',           
+    file_size=size or '',
+    file_caption=original_caption or '',
     BOT_NAME=temp.B_NAME  # ← this fixes the KeyError
             )
         except Exception as e:
