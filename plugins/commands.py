@@ -449,7 +449,10 @@ async def start(client, message):
             f_caption = TGE_CAPTION.format(
     file_name=title or '',
     resolution=resolution or '',
-    codec=codec or '',           
+    codec=codec or '',
+    duration=duration or '',
+    language=language or '',
+    audio_format=audio_format or '',
     file_size=size or '',
     file_caption=original_caption or '',
     BOT_NAME=temp.B_NAME  # ← this fixes the KeyError
