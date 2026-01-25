@@ -21,23 +21,7 @@ from info import *
 from utils import get_settings, save_group_settings, is_subscribed, is_req_subscribed, get_size, get_shortlink, is_check_admin, temp, get_readable_time, get_time, generate_settings_text, log_error, clean_filename
 
 
-def format_caption(
-    title='', resolution='', codec='', duration='',
-    language='', audio_format='', size=''
-):
-    lines = [f"📂 {title}"]
-    details = "🎬"
-    if resolution: details += f" {resolution}"
-    if codec: details += f" {codec}"
-    if duration: details += f" ⏳ {duration}"
-    if language: details += f" 🔊 {language}"
-    if audio_format: details += f" {audio_format}"
-    if details != "🎬":
-        lines.append(f"<b>{details}</b>")
-    if size:
-        lines.append(f"💾 Size: {size}")
-    lines.append("➠Latest Uploads: @srsuggestionsmc\n➠Group Updates: @srsuggestionsofficial")
-    return "\n".join(lines)
+
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
@@ -52,20 +36,6 @@ async def start(client, message):
         except Exception:
             await message.react(emoji="⚡️", big=True)
     m = message
-    
-# 🔍 Custom deep-link instant search handler
-    if len(message.command) == 2 and message.command[1].startswith("search_"):
-        # Extract query from deep link
-        query = message.command[1].replace("search_", "").replace("_", " ")
-        await message.reply_text(f"🔍 Searching for: {query}")
-        
-        # Set message.text so auto_filter can use it
-        message.text = query
-        
-        # Trigger your existing search function
-        await auto_filter(client, message)
-        return  # Stop further execution for deep link
-    
     if len(m.command) == 2 and m.command[1].startswith(('notcopy', 'sendall')):
         _, userid, verify_id, file_id = m.command[1].split("_", 3)
         user_id = int(userid)
@@ -368,25 +338,25 @@ async def start(client, message):
                 if STREAM_MODE and not PREMIUM_STREAM_MODE:
                     
                     btn = [
-                        [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
-                        [InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
+                        [InlineKeyboardButton('🚀 ꜰᴀꜱᴛ ᴅᴏᴡɴʟᴏᴀᴅ / ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ 🖥️', callback_data=f'generate_stream_link:{file_id}')],
+                        [InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
                     ]
                 elif STREAM_MODE and PREMIUM_STREAM_MODE:
                     
                     if not await db.has_premium_access(message.from_user.id):
                         
                         btn = [
-                            [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
-                            [InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
+                            [InlineKeyboardButton('🚀 ꜰᴀꜱᴛ ᴅᴏᴡɴʟᴏᴀᴅ / ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ 🖥️', callback_data=f'prestream')],
+                            [InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
                         ]
                     else:
                         
                         btn = [
-                            [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
-                            [InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
+                            [InlineKeyboardButton('🚀 ꜰᴀꜱᴛ ᴅᴏᴡɴʟᴏᴀᴅ / ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ 🖥️', callback_data=f'generate_stream_link:{file_id}')],
+                            [InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
                         ]
                 else:
-                    btn = [[InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]]
+                    btn = [[InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]]
                 msg = await client.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=file_id,
@@ -413,23 +383,23 @@ async def start(client, message):
         try:
             if STREAM_MODE and not PREMIUM_STREAM_MODE:
                 btn = [
-                    [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
-                    [InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
+                    [InlineKeyboardButton('🚀 ꜰᴀꜱᴛ ᴅᴏᴡɴʟᴏᴀᴅ / ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ 🖥️', callback_data=f'generate_stream_link:{file_id}')],
+                    [InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
                 ]
             elif STREAM_MODE and PREMIUM_STREAM_MODE:
                 if not await db.has_premium_access(message.from_user.id):
                    btn = [
-                        [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
-                        [InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
+                        [InlineKeyboardButton('🚀 ꜰᴀꜱᴛ ᴅᴏᴡɴʟᴏᴀᴅ / ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ 🖥️', callback_data=f'prestream')],
+                        [InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
                     ]
                 else:
                     btn = [
-                        [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
-                        [InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
+                        [InlineKeyboardButton('🚀 ꜰᴀꜱᴛ ᴅᴏᴡɴʟᴏᴀᴅ / ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ 🖥️', callback_data=f'generate_stream_link:{file_id}')],
+                        [InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
                     ]
             else:
             
-                btn = [[InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]] 
+                btn = [[InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]] 
             msg = await client.send_cached_media(
                 chat_id=message.from_user.id,
                 file_id=file_id,
@@ -440,7 +410,7 @@ async def start(client, message):
             file = getattr(msg, filetype.value)
             title = clean_filename(file.file_name)
             size=get_size(file.file_size)
-            f_caption = f"<code>{title}</code>"
+            f_caption = f"🎬<code>{title}</code> /n 🗃️: {size} /n/n Updates: @srsuggestionsmc"
             settings = await get_settings(int(grp_id))
             TGE_CAPTION = settings.get('caption', CUSTOM_FILE_CAPTION)
             if TGE_CAPTION:
@@ -474,41 +444,39 @@ async def start(client, message):
     f_caption = files.caption
     settings = await get_settings(int(grp_id))            
     TGE_CAPTION = settings.get('caption', CUSTOM_FILE_CAPTION)
-  if TGE_CAPTION:
-      try:
-        f_caption = format_caption(
-            title=title or "",
-            resolution=resolution or "",
-            codec=codec or "",
-            duration=duration or "",
-            language=language or "",
-            audio_format=audio_format or "",
-            size=size or ""
-        )
-    except Exception as e:
-        logger.exception(e)
-        pass
+    if TGE_CAPTION:
+        try:
+            f_caption = TGE_CAPTION.format(
+    file_name='' if title is None else title,
+    file_size='' if size is None else size,
+    file_caption='' if f_caption is None else f_caption,
+    BOT_NAME=temp.B_NAME  # ← this fixes the KeyError
+            )
+        except Exception as e:
+            logger.exception(e)
+            f_caption = f_caption
 
-if not f_caption:
-    f_caption = clean_filename(files.file_name)
+    if f_caption is None:
+        f_caption = clean_filename(files.file_name)
+    
     if STREAM_MODE and not PREMIUM_STREAM_MODE:
         btn = [
-            [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
-            [InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
+            [InlineKeyboardButton('🚀 ꜰᴀꜱᴛ ᴅᴏᴡɴʟᴏᴀᴅ / ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ 🖥️', callback_data=f'generate_stream_link:{file_id}')],
+            [InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
         ]
     elif STREAM_MODE and PREMIUM_STREAM_MODE:
         if not await db.has_premium_access(message.from_user.id):
             btn = [
-                [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
-                [InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
+                [InlineKeyboardButton('🚀 ꜰᴀꜱᴛ ᴅᴏᴡɴʟᴏᴀᴅ / ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ 🖥️', callback_data=f'prestream')],
+                [InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
             ]
         else:
             btn = [
-                [InlineKeyboardButton('👤 ADMIN 👤', url=OWNER_LNK)],
-                [InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
+                [InlineKeyboardButton('🚀 ꜰᴀꜱᴛ ᴅᴏᴡɴʟᴏᴀᴅ / ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ 🖥️', callback_data=f'generate_stream_link:{file_id}')],
+                [InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]  # Keep this line unchanged  
             ]
     else:
-        btn = [[InlineKeyboardButton('💠 JOIN UPDATES CHANNEL 💠', url=UPDATE_CHNL_LNK)]]
+        btn = [[InlineKeyboardButton('📌 ᴊᴏɪɴ ᴜᴘᴅᴀᴛᴇꜱ ᴄʜᴀɴɴᴇʟ 📌', url=UPDATE_CHNL_LNK)]]
     msg = await client.send_cached_media(
         chat_id=message.from_user.id,
         file_id=file_id,
@@ -1102,7 +1070,7 @@ async def set_tutorial(client, message: Message):
     except IndexError:
         return await message.reply_text(
             f"<b>ᴄᴏᴍᴍᴀɴᴅ ɪɴᴄᴏᴍᴘʟᴇᴛᴇ !!\n\nᴜꜱᴇ ʟɪᴋᴇ ᴛʜɪꜱ -</b>\n\n"
-            f"<code>/{message.command[0]} https://t.me/dreamxbotz</code>"
+            f"<code>/{message.command[0]} https://t.me/tgebotz</code>"
         )
     if message.command[0] == "set_tutorial":
         tutorial_key = "tutorial"
